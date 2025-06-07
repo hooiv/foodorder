@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useProtectedRoute } from '../lib/use-protected-route';
 import { restaurantApi } from '../lib/api';
-import { Restaurant, Country } from '../types/auth';
+import { Restaurant } from '../types/auth';
 
 export default function Restaurants() {
   // Protect this route - all authenticated users can access
@@ -53,11 +54,13 @@ export default function Restaurants() {
                 key={restaurant.id}
                 className="block hover:shadow-lg transition duration-300"
               >
-                <div className="bg-white overflow-hidden shadow rounded-lg h-full">
-                  <div className="h-48 w-full overflow-hidden">                    <img 
-                      src={restaurant.imageUrl || 'https://via.placeholder.com/400x200?text=Restaurant+Image'} 
+                <div className="bg-white overflow-hidden shadow rounded-lg h-full">                  <div className="h-48 w-full overflow-hidden relative">
+                    <Image 
+                      src={restaurant.imageUrl || 'https://via.placeholder.com/400x200?text=Restaurant+Image'}
                       alt={restaurant.name}
-                      className="w-full h-full object-cover"
+                      fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{ objectFit: 'cover' }}
                     />
                   </div>
                   <div className="px-4 py-5 sm:p-6">

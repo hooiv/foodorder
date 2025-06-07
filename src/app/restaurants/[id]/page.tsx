@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useProtectedRoute } from '../../lib/use-protected-route';
 import { restaurantApi, menuApi } from '../../lib/api';
 import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
-import { Suspense } from 'react';
 import React from 'react';
 
 export default function RestaurantDetail({ params }: { params: { id: string } }) {
@@ -141,11 +141,14 @@ export default function RestaurantDetail({ params }: { params: { id: string } })
     <div className="py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Restaurant header */}
-        <div className="bg-white overflow-hidden shadow-lg rounded-lg">
-          <div className="h-64 w-full overflow-hidden">            <img 
-              src={restaurant.imageUrl || 'https://via.placeholder.com/1200x400?text=Restaurant+Image'} 
+        <div className="bg-white overflow-hidden shadow-lg rounded-lg">          <div className="h-64 w-full overflow-hidden relative">
+            <Image
+              src={restaurant.imageUrl || 'https://via.placeholder.com/1200x400?text=Restaurant+Image'}
               alt={restaurant.name}
-              className="w-full h-full object-cover"
+              fill={true}
+              sizes="100vw"
+              style={{ objectFit: 'cover' }}
+              priority
             />
           </div>
           <div className="px-6 py-5">
@@ -185,11 +188,13 @@ export default function RestaurantDetail({ params }: { params: { id: string } })
             <div
               key={item.id || `menu-item-${index}`}
               className="bg-white overflow-hidden shadow rounded-lg flex flex-col"
-            >
-              <div className="h-48 w-full overflow-hidden">                <img 
-                  src={item.imageUrl || `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`} 
+            >              <div className="h-48 w-full overflow-hidden relative">
+                <Image
+                  src={item.imageUrl || `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`}
                   alt={item.name}
-                  className="w-full h-full object-cover"
+                  fill={true}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
               <div className="px-4 py-4 flex-grow">

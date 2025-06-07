@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useProtectedRoute } from '../../lib/use-protected-route';
-import { useAuth } from '../../context/auth-context';
 import { UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
 
