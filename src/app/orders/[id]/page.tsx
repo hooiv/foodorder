@@ -11,11 +11,9 @@ import React from 'react';
 export default function OrderDetail({ params }: { params: { id: string } }) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
-  // Since we can't easily type React.use() with TypeScript,
-  // we'll continue to use params directly for now, but with a comment to update in the future
-  // The warning mentions this is supported for backward compatibility
-  const { id } = params;
-  
+  // Unwrap params with React.use() to follow Next.js recommended pattern
+  const unwrappedParams = React.use(params as any) as { id: string };
+  const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 

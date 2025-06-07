@@ -73,12 +73,12 @@ export default function Checkout() {
       // Track successful items
       let addedItemsCount = 0;
       
-      // Then add each item to the order with proper error handling
+      // Then add each item to the order with proper error handling      
       for (const { item, quantity } of Object.values(cart.items)) {
         try {
           await orderApi.addItem(order.id, item.id, quantity);
           addedItemsCount++;
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error(`Error adding item ${item.id} to order:`, error);
           // Continue with other items instead of throwing error
           toast.error(`Item "${item.name}" could not be added to your order.`);
@@ -102,10 +102,11 @@ export default function Checkout() {
       toast.dismiss();
       toast.success('Order placed successfully!');
       router.push(`/orders/${order.id}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.dismiss();
       console.error('Error placing order:', error);
-      toast.error(error.response?.data?.message || 'Failed to place order. Please try again.');
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      toast.error(axiosError.response?.data?.message || 'Failed to place order. Please try again.');
     } finally {
       setPlacingOrder(false);
     }

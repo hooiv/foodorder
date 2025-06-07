@@ -48,27 +48,29 @@ export const menuApi = {
 };
 
 // API service for orders
-export const orderApi = {  getAll: async () => {
+export const orderApi = {
+  getAll: async () => {
     const response = await axios.get('/orders');
     return response.data;
   },
   getRecent: async (limit = 5) => {
     const response = await axios.get(`/orders/recent?limit=${limit}`);
     return response.data;
-  },
-  getById: async (id: string) => {
+  },  getById: async (id: string) => {
     const response = await axios.get(`/orders/${id}`);
     return response.data;
-  },  create: async (data = {}) => {
+  },
+  create: async (data = {}) => {
     // The backend creates an empty cart order with the user ID from the JWT token
     try {
       const response = await axios.post('/orders', data);
       return response.data;
-    } catch (error: any) {
-      console.error('Error creating order:', error.response?.data || error.message);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: any }; message?: string };
+      console.error('Error creating order:', axiosError.response?.data || axiosError.message);
       throw error;
-    }
-  },addItem: async (orderId: string, menuItemId: string, quantity: number, specialInstructions?: string) => {
+    }  },
+  addItem: async (orderId: string, menuItemId: string, quantity: number, specialInstructions?: string) => {
     if (!orderId || !menuItemId) {
       throw new Error('Missing required parameters: orderId and menuItemId are required');
     }
@@ -79,38 +81,43 @@ export const orderApi = {  getAll: async () => {
         quantity: quantity || 1,
         specialInstructions: specialInstructions || '',
       };
-      
       const response = await axios.post(`/orders/${orderId}/items`, payload);
       return response.data;
-    } catch (error: any) {
-      console.error('Error adding item to order:', error.response?.data || error.message);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: any }; message?: string };
+      console.error('Error adding item to order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
-  },  removeItem: async (orderId: string, itemId: string) => {
+  },
+  removeItem: async (orderId: string, itemId: string) => {
     try {
       const response = await axios.delete(`/orders/${orderId}/items/${itemId}`);
       return response.data;
-    } catch (error: any) {
-      console.error('Error removing item from order:', error.response?.data || error.message);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: any }; message?: string };
+      console.error('Error removing item from order:', axiosError.response?.data || axiosError.message);
       throw error;
-    }
-  },placeOrder: async (orderId: string, paymentMethod: string) => {
+    }  },
+  placeOrder: async (orderId: string, paymentMethod: string) => {
     try {
       const response = await axios.post(`/orders/${orderId}/place`, {
         paymentMethod,
         paymentId: `payment_${Date.now()}` // Generate a dummy paymentId
       });
       return response.data;
-    } catch (error: any) {
-      console.error('Error placing order:', error.response?.data || error.message);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: any }; message?: string };
+      console.error('Error placing order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
-  },  cancelOrder: async (orderId: string) => {
+  },
+  cancelOrder: async (orderId: string) => {
     try {
       const response = await axios.post(`/orders/${orderId}/cancel`);
       return response.data;
-    } catch (error: any) {
-      console.error('Error cancelling order:', error.response?.data || error.message);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: any }; message?: string };
+      console.error('Error cancelling order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
   },

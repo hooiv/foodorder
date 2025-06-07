@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth-context';
 
@@ -31,13 +30,13 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    setLoading(true);
-    try {
+    setLoading(true);    try {
       await login(data.email, data.password);
       toast.success('Login successful!');
       router.push('/dashboard');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      toast.error(axiosError.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -47,11 +46,10 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
-            Sign in to your account
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">            Sign in to your account
           </h1>
           <p className="mt-2 text-sm text-gray-600">
-            Nick Fury's Food Ordering System
+            Nick Fury&apos;s Food Ordering System
           </p>
         </div>
 

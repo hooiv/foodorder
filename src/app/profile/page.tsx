@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
 import { useProtectedRoute } from '../lib/use-protected-route';
-import { useAuth } from '../context/auth-context';
 import { UserRole, Country } from '../types/auth';
 
 export default function Profile() {

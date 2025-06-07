@@ -10,9 +10,7 @@ export function withAuth<P extends object>(
 ) {
   return function ProtectedRoute(props: P) {
     const { user, loading, isAuthenticated } = useAuth();
-    const router = useRouter();
-
-    useEffect(() => {
+    const router = useRouter();    useEffect(() => {
       // Wait until authentication check is complete
       if (!loading) {
         // Redirect to login if not authenticated
@@ -23,8 +21,8 @@ export function withAuth<P extends object>(
         else if (roles && user && !roles.includes(user.role)) {
           router.push('/dashboard'); // Redirect to dashboard if wrong role
         }
-      }
-    }, [loading, isAuthenticated, router, user, roles]);
+      }    // roles intentionally omitted from deps array as it's a stable reference
+    }, [loading, isAuthenticated, router, user]);// roles intentionally omitted as it's stable
 
     // Show nothing while checking authentication
     if (loading || !isAuthenticated || (roles && user && !roles.includes(user.role))) {

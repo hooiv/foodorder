@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -36,9 +36,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Link href="/dashboard" className="text-white font-bold text-lg">
-                      Nick Fury's Food Order
+                  <div className="flex-shrink-0">                    <Link href="/dashboard" className="text-white font-bold text-lg">
+                      Nick Fury&apos;s Food Order
                     </Link>
                   </div>
                   <div className="hidden md:block">
