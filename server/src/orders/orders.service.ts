@@ -43,6 +43,30 @@ export class OrdersService {
     });
   }
 
+  async findRecent(userId: string, userRole: UserRole, userCountry: Country, limit: number = 5): Promise<Order[]> {
+    let query = this.orderRepository.createQueryBuilder('order')
+      .leftJoinAndSelect('order.user', 'user')
+      .leftJoinAndSelect('order.items', 'items')
+      .leftJoinAndSelect('items.menuItem', 'menuItem')
+      .orderBy('order.createdAt', 'DESC')
+      .take(limit);
+    
+    // Admin can see all orders
+    if (userRole === UserRole.ADMIN) {
+      // No additional conditions needed
+    }
+    // Manager can see orders from their country
+    else if (userRole === UserRole.MANAGER) {
+      query = query.andWhere('user.country = :country', { country: userCountry });
+    }
+    // Members can see only their orders
+    else {
+      query = query.andWhere('user.id = :userId', { userId });
+    }
+    
+    return query.getMany();
+  }
+
   async findOne(id: string, userId: string, userRole: UserRole, userCountry: Country): Promise<Order> {
     const order = await this.orderRepository.findOne({
       where: { id },

@@ -6,13 +6,13 @@ import { useProtectedRoute } from '../../lib/use-protected-route';
 import { orderApi } from '../../lib/api';
 import { Order, OrderStatus, UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
+import React from 'react';
 
 export default function OrderDetail({ params }: { params: { id: string } }) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();
-  
-  const router = useRouter();
-  const { id } = params;
+    const router = useRouter();
+  const { id } = React.use(params);
   
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);

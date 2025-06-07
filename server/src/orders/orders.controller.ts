@@ -9,6 +9,7 @@ import {
   Request,
   Patch,
   ForbiddenException,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
@@ -35,6 +36,18 @@ export class OrdersController {
     );
   }
 
+  @Get('recent')
+  @ApiOperation({ summary: 'Get recent orders with optional limit parameter' })
+  findRecent(@Request() req, @Query('limit') limit?: number) {
+    const limitValue = limit ? parseInt(limit.toString(), 10) : 5;
+    return this.ordersService.findRecent(
+      req.user.userId,
+      req.user.role,
+      req.user.country,
+      limitValue
+    );
+  }
+  
   @Get(':id')
   @ApiOperation({ summary: 'Get an order by ID' })
   findOne(@Param('id') id: string, @Request() req) {

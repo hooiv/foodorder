@@ -7,15 +7,14 @@ import { restaurantApi, menuApi } from '../../lib/api';
 import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
 import { Suspense } from 'react';
+import React from 'react';
 
 export default function RestaurantDetail({ params }: { params: { id: string } }) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();
     const router = useRouter();
-  
-  // TODO: In future Next.js versions, params will be a Promise that needs to be unwrapped with React.use()
-  // Update this to: const { id } = React.use(params); when upgrading Next.js
-  const { id } = params;
+    // Using React.use() to unwrap params as recommended by Next.js
+  const { id } = React.use(params);
   
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
