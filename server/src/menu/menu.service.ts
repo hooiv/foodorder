@@ -96,41 +96,37 @@ export class MenuService {
     }
 
     let menuItems: MenuItemData[] = [];
-    
-    if (restaurant.country === Country.INDIA) {
+      if (restaurant.country === Country.INDIA) {
       menuItems = [
         {
           name: 'Butter Chicken',
           description: 'Tender chicken in a rich buttery tomato sauce',
           price: 14.99,
-          imageUrl: 'https://example.com/butter-chicken.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop&crop=center',
           categories: ['Main Course', 'Chicken', 'Spicy'],
           isAvailable: true,
-        },
-        {
+        },        {
           name: 'Vegetable Biryani',
           description: 'Fragrant basmati rice with mixed vegetables and spices',
           price: 12.99,
-          imageUrl: 'https://example.com/veg-biryani.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=300&fit=crop&crop=center',
           categories: ['Main Course', 'Rice', 'Vegetarian'],
           isAvailable: true,
-        },
-        {
+        },        {
           name: 'Garlic Naan',
           description: 'Soft flatbread with garlic and butter',
           price: 3.99,
-          imageUrl: 'https://example.com/naan.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400&h=300&fit=crop&crop=center',
           categories: ['Bread', 'Side Dish'],
           isAvailable: true,
         },
-      ];
-    } else if (restaurant.country === Country.AMERICA) {
+      ];    } else if (restaurant.country === Country.AMERICA) {
       menuItems = [
         {
           name: 'Cheeseburger',
           description: 'Juicy beef patty with cheese, lettuce, and tomato',
           price: 9.99,
-          imageUrl: 'https://example.com/cheeseburger.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop&crop=center',
           categories: ['Burgers', 'Main Course'],
           isAvailable: true,
         },
@@ -138,7 +134,7 @@ export class MenuService {
           name: 'Buffalo Wings',
           description: 'Spicy chicken wings with blue cheese dip',
           price: 11.99,
-          imageUrl: 'https://example.com/wings.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1608039755401-742074f0548d?w=400&h=300&fit=crop&crop=center',
           categories: ['Appetizer', 'Chicken', 'Spicy'],
           isAvailable: true,
         },
@@ -146,18 +142,16 @@ export class MenuService {
           name: 'Caesar Salad',
           description: 'Fresh romaine lettuce with Caesar dressing and croutons',
           price: 8.99,
-          imageUrl: 'https://example.com/caesar.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=400&h=300&fit=crop&crop=center',
           categories: ['Salad', 'Healthy'],
           isAvailable: true,
         },
-      ];
-    } else {
-      menuItems = [
-        {
+      ];    } else {
+      menuItems = [        {
           name: 'World Pizza',
           description: 'Pizza with international toppings',
           price: 15.99,
-          imageUrl: 'https://example.com/world-pizza.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop&crop=center',
           categories: ['Pizza', 'Main Course'],
           isAvailable: true,
         },
@@ -165,7 +159,7 @@ export class MenuService {
           name: 'Global Salad',
           description: 'Mixed greens with ingredients from around the world',
           price: 9.99,
-          imageUrl: 'https://example.com/global-salad.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop&crop=center',
           categories: ['Salad', 'Healthy', 'Vegetarian'],
           isAvailable: true,
         },
@@ -173,13 +167,12 @@ export class MenuService {
           name: 'International Platter',
           description: 'Sample dishes from different cuisines',
           price: 19.99,
-          imageUrl: 'https://example.com/platter.jpg',
+          imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop&crop=center',
           categories: ['Main Course', 'Sharing'],
           isAvailable: true,
         },
-      ];    }
-    
-    for (const itemData of menuItems) {
+      ];}
+      for (const itemData of menuItems) {
       const existingItem = await this.menuItemRepository.findOne({ 
         where: { 
           name: itemData.name,
@@ -199,6 +192,10 @@ export class MenuService {
           restaurant,
         });
         await this.menuItemRepository.save(menuItem);
+      } else {
+        // Update existing menu item with new image URL
+        existingItem.imageUrl = itemData.imageUrl;
+        await this.menuItemRepository.save(existingItem);
       }
     }
   }

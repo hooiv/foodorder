@@ -142,9 +142,8 @@ export default function RestaurantDetail({ params }: { params: { id: string } })
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Restaurant header */}
         <div className="bg-white overflow-hidden shadow-lg rounded-lg">
-          <div className="h-64 w-full overflow-hidden">
-            <img 
-              src={restaurant.image || 'https://via.placeholder.com/1200x400?text=Restaurant+Image'} 
+          <div className="h-64 w-full overflow-hidden">            <img 
+              src={restaurant.imageUrl || 'https://via.placeholder.com/1200x400?text=Restaurant+Image'} 
               alt={restaurant.name}
               className="w-full h-full object-cover"
             />
@@ -187,9 +186,8 @@ export default function RestaurantDetail({ params }: { params: { id: string } })
               key={item.id || `menu-item-${index}`}
               className="bg-white overflow-hidden shadow rounded-lg flex flex-col"
             >
-              <div className="h-48 w-full overflow-hidden">
-                <img 
-                  src={item.image || `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`} 
+              <div className="h-48 w-full overflow-hidden">                <img 
+                  src={item.imageUrl || `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`} 
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />

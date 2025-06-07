@@ -54,9 +54,8 @@ export default function Restaurants() {
                 className="block hover:shadow-lg transition duration-300"
               >
                 <div className="bg-white overflow-hidden shadow rounded-lg h-full">
-                  <div className="h-48 w-full overflow-hidden">
-                    <img 
-                      src={restaurant.image || 'https://via.placeholder.com/400x200?text=Restaurant+Image'} 
+                  <div className="h-48 w-full overflow-hidden">                    <img 
+                      src={restaurant.imageUrl || 'https://via.placeholder.com/400x200?text=Restaurant+Image'} 
                       alt={restaurant.name}
                       className="w-full h-full object-cover"
                     />

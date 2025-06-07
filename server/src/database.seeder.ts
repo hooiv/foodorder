@@ -15,7 +15,6 @@ export class DatabaseSeeder implements OnApplicationBootstrap {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
-
   async onApplicationBootstrap() {
     // Check if we need to seed the database
     const userCount = await this.userRepository.count();
@@ -24,6 +23,29 @@ export class DatabaseSeeder implements OnApplicationBootstrap {
       console.log('Seeding database...');
       await this.seedDatabase();
       console.log('Database seeded successfully!');
+    } else {
+      // Force update images for existing data
+      console.log('Updating images for existing restaurants and menu items...');
+      await this.updateImages();
+      console.log('Images updated successfully!');
+    }
+  }
+  async updateImages() {
+    try {
+      // Update restaurants with new images
+      console.log('Updating restaurant images...');
+      await this.restaurantsService.seedRestaurants();
+
+      // Get restaurants for menu seeding
+      const restaurants = await this.restaurantsService.findAll(Country.GLOBAL);
+
+      // Update menu items with new images
+      console.log('Updating menu item images...');
+      for (const restaurant of restaurants) {
+        await this.menuService.seedMenuItems(restaurant.id, Country.GLOBAL);
+      }
+    } catch (error) {
+      console.error('Error updating images:', error);
     }
   }
 

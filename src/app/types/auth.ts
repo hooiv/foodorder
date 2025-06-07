@@ -25,7 +25,7 @@ export interface Restaurant {
   name: string;
   description: string;
   address: string;
-  image: string;
+  imageUrl: string;
   country: Country;
 }
 
@@ -34,7 +34,7 @@ export interface MenuItem {
   name: string;
   description: string;
   price: number;
-  image: string;
+  imageUrl: string;
   restaurantId: string;
   category: string;
   isVegetarian: boolean;

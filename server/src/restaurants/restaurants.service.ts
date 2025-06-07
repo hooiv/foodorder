@@ -59,46 +59,43 @@ export class RestaurantsService {
     await this.restaurantsRepository.remove(restaurant);
   }
 
-  async seedRestaurants(): Promise<void> {
-    const restaurants = [
+  async seedRestaurants(): Promise<void> {    const restaurants = [
       {
         name: 'Indian Spice House',
         description: 'Authentic Indian cuisine with a modern twist',
         address: 'Mumbai Central, Mumbai, India',
-        imageUrl: 'https://example.com/indian-spice.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&h=400&fit=crop&crop=center',
         country: Country.INDIA,
       },
       {
         name: 'Curry Palace',
         description: 'Serving delicious curry dishes from all regions of India',
         address: 'Gandhi Street, Delhi, India',
-        imageUrl: 'https://example.com/curry-palace.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&h=400&fit=crop&crop=center',
         country: Country.INDIA,
       },
       {
         name: 'American Diner',
         description: 'Classic American comfort food',
         address: '5th Avenue, New York, USA',
-        imageUrl: 'https://example.com/american-diner.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=400&fit=crop&crop=center',
         country: Country.AMERICA,
       },
       {
         name: 'Burger Joint',
         description: 'Best burgers in town',
         address: 'Broadway, Los Angeles, USA',
-        imageUrl: 'https://example.com/burger-joint.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&h=400&fit=crop&crop=center',
         country: Country.AMERICA,
       },
       {
         name: 'Global Eats',
         description: 'International cuisine from around the world',
         address: 'World Trade Center, New York, USA',
-        imageUrl: 'https://example.com/global-eats.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop&crop=center',
         country: Country.GLOBAL,
       },
-    ];
-
-    for (const restaurantData of restaurants) {
+    ];    for (const restaurantData of restaurants) {
       const existingRestaurant = await this.restaurantsRepository.findOne({ 
         where: { name: restaurantData.name } 
       });
@@ -106,6 +103,10 @@ export class RestaurantsService {
       if (!existingRestaurant) {
         const restaurant = this.restaurantsRepository.create(restaurantData);
         await this.restaurantsRepository.save(restaurant);
+      } else {
+        // Update existing restaurant with new image URL
+        existingRestaurant.imageUrl = restaurantData.imageUrl;
+        await this.restaurantsRepository.save(existingRestaurant);
       }
     }
   }
