@@ -95,9 +95,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                               </span>
                             </div>
                           </div>
-                          <hr className="my-1" />
-                          <Menu.Item>
-                            {({ active }) => (
+                          <hr className="my-1" />                          <Menu.Item>
+                            {({ active }: { active: boolean }) => (
                               <Link
                                 href="/profile"
                                 className={classNames(
@@ -108,9 +107,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 Your Profile
                               </Link>
                             )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
+                          </Menu.Item><Menu.Item>
+                            {({ active }: { active: boolean }) => (
                               <button
                                 onClick={logout}
                                 className={classNames(

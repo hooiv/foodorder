@@ -6,12 +6,14 @@ import { useProtectedRoute } from '../../lib/use-protected-route';
 import { orderApi } from '../../lib/api';
 import { Order, OrderStatus, UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
+import React from 'react';
 
 export default function OrderDetail({ params }: { params: { id: string } }) {
   // Protect this route - all authenticated users can access
-  const { user } = useProtectedRoute();
-  
-  const router = useRouter();
+  const { user } = useProtectedRoute();  const router = useRouter();
+  // Since we can't easily type React.use() with TypeScript,
+  // we'll continue to use params directly for now, but with a comment to update in the future
+  // The warning mentions this is supported for backward compatibility
   const { id } = params;
   
   const [order, setOrder] = useState<Order | null>(null);

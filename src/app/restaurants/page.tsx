@@ -18,7 +18,7 @@ export default function Restaurants() {
       try {
         setLoading(true);
         const data = await restaurantApi.getAll();
-        setRestaurants(data);
+        setRestaurants(data as Restaurant[]);
       } catch (error) {
         console.error('Error fetching restaurants:', error);
       } finally {

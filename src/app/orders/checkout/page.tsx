@@ -50,7 +50,7 @@ export default function Checkout() {
         
         // Fetch restaurant details
         const restaurantData = await restaurantApi.getById(parsedCart.restaurantId);
-        setRestaurant(restaurantData);
+        setRestaurant(restaurantData as Restaurant);
       } catch (error) {
         console.error('Error loading cart data:', error);
         toast.error('Error loading cart data');
@@ -68,7 +68,7 @@ export default function Checkout() {
       toast.loading('Creating your order...');
       
       // First create the order
-      const order = await orderApi.create();
+      const order = await orderApi.create() as { id: string };
       
       // Track successful items
       let addedItemsCount = 0;

@@ -10,9 +10,11 @@ import React from 'react';
 
 export default function OrderDetail({ params }: { params: { id: string } }) {
   // Protect this route - all authenticated users can access
-  const { user } = useProtectedRoute();
-    const router = useRouter();
-  const { id } = React.use(params);
+  const { user } = useProtectedRoute();  const router = useRouter();
+  // Since we can't easily type React.use() with TypeScript,
+  // we'll continue to use params directly for now, but with a comment to update in the future
+  // The warning mentions this is supported for backward compatibility
+  const { id } = params;
   
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ export default function OrderDetail({ params }: { params: { id: string } }) {
     const fetchOrderData = async () => {
       try {
         setLoading(true);
-        const data = await orderApi.getById(id);
+        const data = await orderApi.getById(id) as Order;
         // Map API response items field to orderItems for frontend consistency
         if (data && data.items && !data.orderItems) {
           data.orderItems = data.items;
