@@ -1,15 +1,18 @@
-// Custom type declarations for React.use() with Next.js params
+// Define React.use() for Next.js
 declare global {
   namespace React {
-    // Define a better-typed React.use function for NextJS params
-    function use<T>(promise: T): T extends Promise<infer U> ? U : T;
+    function use<T>(promise: Promise<T>): T;
+    function use<T>(value: T): T;
   }
 }
 
-// Define a type for route params that can be used with React.use()
-export interface RouteParams {
+// We need a simple interface with the id property
+export interface IdParams {
   id: string;
   [key: string]: string;
 }
+
+// For compatibility with Next.js
+export type RouteParams = Promise<IdParams>;
 
 export {};

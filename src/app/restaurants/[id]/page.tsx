@@ -9,19 +9,19 @@ import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-import { RouteParams } from '../../types/react-extensions';
+import { IdParams, RouteParams } from '../../types/react-extensions';
 
-// Define a generic type for page props
+// Define page props using our custom types
 interface PageProps {
-  params: RouteParams;
+  params: IdParams | RouteParams;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default function RestaurantDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();
-  // Unwrap params with React.use() to follow Next.js recommendations for future compatibility
-  const unwrappedParams = React.use(params);
+  // Use React.use() to unwrap params safely
+  const unwrappedParams = React.use(params) as IdParams;
   const { id } = unwrappedParams;
   
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);

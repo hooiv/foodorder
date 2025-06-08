@@ -8,19 +8,19 @@ import { Order, OrderStatus, UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-import { RouteParams } from '../../types/react-extensions';
+import { IdParams, RouteParams } from '../../types/react-extensions';
 
-// Define a generic type for page props
+// Define page props using our custom types
 interface PageProps {
-  params: RouteParams;
+  params: IdParams | RouteParams;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default function OrderDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
-  // Follow Next.js best practice by using React.use()
-  const unwrappedParams = React.use(params);
+  // Follow Next.js best practice by using React.use() with proper typing
+  const unwrappedParams = React.use(params) as IdParams;
   const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
