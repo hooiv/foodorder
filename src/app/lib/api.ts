@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Restaurant, Order } from '../types/auth'; // Import Restaurant and Order types
 
 // Configure Axios defaults
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,12 +26,12 @@ export const authApi = {
 
 // API service for restaurants
 export const restaurantApi = {
-  getAll: async () => {
-    const response = await axios.get('/restaurants');
+  getAll: async (): Promise<Restaurant[]> => { // Add return type Promise<Restaurant[]>
+    const response = await axios.get<Restaurant[]>('/restaurants'); // Specify type for axios.get
     return response.data;
   },
-  getById: async (id: string) => {
-    const response = await axios.get(`/restaurants/${id}`);
+  getById: async (id: string): Promise<Restaurant> => { // Add return type Promise<Restaurant>
+    const response = await axios.get<Restaurant>(`/restaurants/${id}`); // Specify type for axios.get
     return response.data;
   },
 };
@@ -49,27 +50,27 @@ export const menuApi = {
 
 // API service for orders
 export const orderApi = {
-  getAll: async () => {
-    const response = await axios.get('/orders');
+  getAll: async (): Promise<Order[]> => { // Add return type Promise<Order[]>
+    const response = await axios.get<Order[]>('/orders'); // Specify type for axios.get
     return response.data;
   },
-  getRecent: async (limit = 5) => {
-    const response = await axios.get(`/orders/recent?limit=${limit}`);
+  getRecent: async (limit = 5): Promise<Order[]> => { // Add return type Promise<Order[]>
+    const response = await axios.get<Order[]>(`/orders/recent?limit=${limit}`); // Specify type for axios.get
     return response.data;
-  },  getById: async (id: string) => {
-    const response = await axios.get(`/orders/${id}`);
+  },  getById: async (id: string): Promise<Order> => { // Add return type Promise<Order>
+    const response = await axios.get<Order>(`/orders/${id}`); // Specify type for axios.get
     return response.data;
   },
-  create: async (data = {}) => {
+  create: async (data = {}): Promise<Order> => { // Add return type Promise<Order>
     // The backend creates an empty cart order with the user ID from the JWT token
     try {
-      const response = await axios.post('/orders', data);
+      const response = await axios.post<Order>('/orders', data); // Specify type for axios.post
       return response.data;    } catch (error: unknown) {
       const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error creating order:', axiosError.response?.data || axiosError.message);
       throw error;
     }  },
-  addItem: async (orderId: string, menuItemId: string, quantity: number, specialInstructions?: string) => {
+  addItem: async (orderId: string, menuItemId: string, quantity: number, specialInstructions?: string): Promise<Order> => { // Add return type Promise<Order>
     if (!orderId || !menuItemId) {
       throw new Error('Missing required parameters: orderId and menuItemId are required');
     }
@@ -80,24 +81,24 @@ export const orderApi = {
         quantity: quantity || 1,
         specialInstructions: specialInstructions || '',
       };
-      const response = await axios.post(`/orders/${orderId}/items`, payload);
+      const response = await axios.post<Order>(`/orders/${orderId}/items`, payload); // Specify type for axios.post
       return response.data;    } catch (error: unknown) {
       const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error adding item to order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
   },
-  removeItem: async (orderId: string, itemId: string) => {
+  removeItem: async (orderId: string, itemId: string): Promise<Order> => { // Add return type Promise<Order>
     try {
-      const response = await axios.delete(`/orders/${orderId}/items/${itemId}`);
+      const response = await axios.delete<Order>(`/orders/${orderId}/items/${itemId}`); // Specify type for axios.delete
       return response.data;    } catch (error: unknown) {
       const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error removing item from order:', axiosError.response?.data || axiosError.message);
       throw error;
     }  },
-  placeOrder: async (orderId: string, paymentMethod: string) => {
+  placeOrder: async (orderId: string, paymentMethod: string): Promise<Order> => { // Add return type Promise<Order>
     try {
-      const response = await axios.post(`/orders/${orderId}/place`, {
+      const response = await axios.post<Order>(`/orders/${orderId}/place`, {
         paymentMethod,
         paymentId: `payment_${Date.now()}` // Generate a dummy paymentId
       });
@@ -107,9 +108,9 @@ export const orderApi = {
       throw error;
     }
   },
-  cancelOrder: async (orderId: string) => {
+  cancelOrder: async (orderId: string): Promise<Order> => { // Add return type Promise<Order>
     try {
-      const response = await axios.post(`/orders/${orderId}/cancel`);
+      const response = await axios.post<Order>(`/orders/${orderId}/cancel`); // Specify type for axios.post
       return response.data;    } catch (error: unknown) {
       const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error cancelling order:', axiosError.response?.data || axiosError.message);
