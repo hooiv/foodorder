@@ -11,17 +11,17 @@ import React from 'react';
 // Remove custom PageProps import and use type directly with any
 export default function OrderDetail({
   params,
-  searchParams // Add searchParams here
+  searchParams
 }: {
-  params: any;
-  searchParams?: Promise<any>; // Align with Vercel's expected Promise type
+  params: any; // Kept as any for now, can be PageProps['params']
+  searchParams?: Promise<any>; // Ensure this matches the new PageProps
 }) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
   // Follow Next.js best practice by using React.use() with any for Vercel compatibility
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const unwrappedParams = React.use(params);
-  // const unwrappedSearchParams = React.use(searchParams); // Uncomment if you need to unwrap searchParams
+  // const unwrappedSearchParams = React.use(searchParams); // Uncomment and use if needed
   const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);

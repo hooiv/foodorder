@@ -14,7 +14,7 @@ export interface IdParams {
 // For full compatibility with Vercel's generated types
 export interface PageProps {
   params: Promise<any>;
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams?: Promise<any>;
 }
 
 export {};
