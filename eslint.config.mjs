@@ -16,8 +16,14 @@ const eslintConfig = [
     rules: {
       "@typescript-eslint/no-explicit-any": "error"
     }
+  },
+  {
+    // Add back the override for dynamic route files since we need to use 'any' for Vercel compatibility
+    files: ["**/[id]*/page.tsx"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off"
+    }
   }
-  // We no longer need the override for dynamic route files as we've fixed the typing
 ];
 
 export default eslintConfig;

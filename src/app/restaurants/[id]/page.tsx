@@ -9,19 +9,14 @@ import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-import { IdParams, RouteParams } from '../../types/react-extensions';
-
-// Define page props using our custom types
-interface PageProps {
-  params: IdParams | RouteParams;
-  searchParams: { [key: string]: string | string[] | undefined };
-}
+import { PageProps } from '../../types/react-extensions';
 
 export default function RestaurantDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();
-  // Use React.use() to unwrap params safely
-  const unwrappedParams = React.use(params) as IdParams;
+  // Use React.use() with any for Vercel compatibility
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const unwrappedParams = React.use(params as any);
   const { id } = unwrappedParams;
   
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);

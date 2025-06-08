@@ -6,13 +6,15 @@ declare global {
   }
 }
 
-// We need a simple interface with the id property
 export interface IdParams {
   id: string;
   [key: string]: string;
 }
 
-// For compatibility with Next.js
-export type RouteParams = Promise<IdParams>;
+// For full compatibility with Vercel's generated types
+export interface PageProps {
+  params: Promise<any>;
+  searchParams?: Record<string, string | string[] | undefined>;
+}
 
 export {};
