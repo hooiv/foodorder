@@ -6,4 +6,10 @@ declare global {
   }
 }
 
+// Define a type for route params that can be used with React.use()
+export interface RouteParams {
+  id: string;
+  [key: string]: string;
+}
+
 export {};

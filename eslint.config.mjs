@@ -12,17 +12,12 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    files: ["**/*.tsx"],
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "error"
     }
-  },
-  {
-    files: ["**/[id]*/page.tsx"],
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off"
-    }
   }
+  // We no longer need the override for dynamic route files as we've fixed the typing
 ];
 
 export default eslintConfig;

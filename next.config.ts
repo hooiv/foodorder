@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Re-enable ESLint during builds now that we've fixed the typing issues
+  eslint: {
+    ignoreDuringBuilds: false, // Changed from true
+  },
   images: {
     domains: [
       'images.unsplash.com',
