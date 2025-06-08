@@ -13,8 +13,8 @@ export default function OrderDetail({
   params,
   searchParams
 }: {
-  params: any; // Kept as any for now, can be PageProps['params']
-  searchParams?: Promise<any>; // Ensure this matches the new PageProps
+  params: Promise<any>; // Explicitly Promise<any>
+  searchParams?: Promise<any>; // Explicitly Promise<any> | undefined
 }) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();

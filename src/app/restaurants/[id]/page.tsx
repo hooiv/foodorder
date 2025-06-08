@@ -14,8 +14,8 @@ export default function RestaurantDetail({
   params,
   searchParams
 }: {
-  params: any;
-  searchParams?: Promise<any>; // Align with Vercel's expected Promise type
+  params: Promise<any>; // Explicitly Promise<any>
+  searchParams?: Promise<any>; // Explicitly Promise<any> | undefined
 }) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();

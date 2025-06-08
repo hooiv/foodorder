@@ -11,10 +11,6 @@ export interface IdParams {
   [key: string]: string;
 }
 
-// For full compatibility with Vercel's generated types
-export interface PageProps {
-  params: Promise<any>;
-  searchParams?: Promise<any>;
-}
+// Removed PageProps interface to avoid conflicts with Vercel's generated types
 
 export {};
