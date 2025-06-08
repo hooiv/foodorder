@@ -8,14 +8,20 @@ import { Order, OrderStatus, UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-import { PageProps } from '../../types/react-extensions';
-
-export default function OrderDetail({ params }: PageProps) {
+// Remove custom PageProps import and use type directly with any
+export default function OrderDetail({
+  params,
+  searchParams // Add searchParams here
+}: {
+  params: any;
+  searchParams?: Promise<any>; // Align with Vercel's expected Promise type
+}) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
   // Follow Next.js best practice by using React.use() with any for Vercel compatibility
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const unwrappedParams = React.use(params as any);
+  const unwrappedParams = React.use(params);
+  // const unwrappedSearchParams = React.use(searchParams); // Uncomment if you need to unwrap searchParams
   const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);

@@ -9,14 +9,20 @@ import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-import { PageProps } from '../../types/react-extensions';
-
-export default function RestaurantDetail({ params }: PageProps) {
+// Remove custom PageProps import and use type directly with any
+export default function RestaurantDetail({
+  params,
+  searchParams
+}: {
+  params: any;
+  searchParams?: Promise<any>; // Align with Vercel's expected Promise type
+}) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();
   // Use React.use() with any for Vercel compatibility
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const unwrappedParams = React.use(params as any);
+  const unwrappedParams = React.use(params);
+  // const unwrappedSearchParams = React.use(searchParams); // Uncomment if you need to unwrap searchParams
   const { id } = unwrappedParams;
   
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
