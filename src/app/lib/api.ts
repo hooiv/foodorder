@@ -64,9 +64,8 @@ export const orderApi = {
     // The backend creates an empty cart order with the user ID from the JWT token
     try {
       const response = await axios.post('/orders', data);
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: any }; message?: string };
+      return response.data;    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error creating order:', axiosError.response?.data || axiosError.message);
       throw error;
     }  },
@@ -82,9 +81,8 @@ export const orderApi = {
         specialInstructions: specialInstructions || '',
       };
       const response = await axios.post(`/orders/${orderId}/items`, payload);
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: any }; message?: string };
+      return response.data;    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error adding item to order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
@@ -92,9 +90,8 @@ export const orderApi = {
   removeItem: async (orderId: string, itemId: string) => {
     try {
       const response = await axios.delete(`/orders/${orderId}/items/${itemId}`);
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: any }; message?: string };
+      return response.data;    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error removing item from order:', axiosError.response?.data || axiosError.message);
       throw error;
     }  },
@@ -104,9 +101,8 @@ export const orderApi = {
         paymentMethod,
         paymentId: `payment_${Date.now()}` // Generate a dummy paymentId
       });
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: any }; message?: string };
+      return response.data;    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error placing order:', axiosError.response?.data || axiosError.message);
       throw error;
     }
@@ -114,9 +110,8 @@ export const orderApi = {
   cancelOrder: async (orderId: string) => {
     try {
       const response = await axios.post(`/orders/${orderId}/cancel`);
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: any }; message?: string };
+      return response.data;    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown }; message?: string };
       console.error('Error cancelling order:', axiosError.response?.data || axiosError.message);
       throw error;
     }

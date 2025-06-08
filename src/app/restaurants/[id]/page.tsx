@@ -9,13 +9,20 @@ import { Restaurant, MenuItem } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-export default function RestaurantDetail({ params }: { params: { id: string } }) {
+// Define a type for the params
+type RouteParams = {
+  id: string;
+  [key: string]: string | string[];
+};
+
+export default function RestaurantDetail({ params }: { params: RouteParams }) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();
-    // Unwrap params with React.use() to follow Next.js recommended pattern
-  // First cast to any to help TypeScript understand what we're doing
-  const unwrappedParams = React.use(params as any) as { id: string };
-  const { id } = unwrappedParams;
+  
+  // Use React.use() as recommended by Next.js for future compatibility
+  // @ts-expect-error - TypeScript doesn't fully understand React.use() with params yet
+  const unwrappedParams = React.use(params);
+  const { id } = unwrappedParams as RouteParams;
   
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
