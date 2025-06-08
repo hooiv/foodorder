@@ -8,18 +8,19 @@ import { Order, OrderStatus, UserRole } from '../../types/auth';
 import toast from 'react-hot-toast';
 import React from 'react';
 
-type RouteParams = {
-  id: string;
-  [key: string]: string | string[];
-};
+// Define a generic type for page props
+interface PageProps {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
 
-export default function OrderDetail({ params }: { params: RouteParams }) {
+export default function OrderDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
   
-  // Use React.use() as recommended by Next.js for future compatibility
-  // @ts-expect-error - TypeScript doesn't fully understand React.use() with params yet
-  const unwrappedParams = React.use(params) as RouteParams;
+  // Unwrap params with React.use() to follow Next.js recommendations for future compatibility
+  // Using a type assertion to satisfy TypeScript
+  const unwrappedParams = React.use(params as any) as { id: string };
   const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
