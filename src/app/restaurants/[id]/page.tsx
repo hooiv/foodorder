@@ -15,12 +15,14 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+// Define a type for Next.js params that can be used with React.use()
+type ReactUseParams = unknown;
+
 export default function RestaurantDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   useProtectedRoute();  const router = useRouter();
-  
   // Unwrap params with React.use() to follow Next.js recommendations for future compatibility
-  // Using a type assertion to satisfy TypeScript
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const unwrappedParams = React.use(params as any) as { id: string };
   const { id } = unwrappedParams;
   

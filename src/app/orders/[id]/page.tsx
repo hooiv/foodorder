@@ -17,9 +17,8 @@ interface PageProps {
 export default function OrderDetail({ params }: PageProps) {
   // Protect this route - all authenticated users can access
   const { user } = useProtectedRoute();  const router = useRouter();
-  
-  // Unwrap params with React.use() to follow Next.js recommendations for future compatibility
-  // Using a type assertion to satisfy TypeScript
+    // Follow Next.js best practice by using React.use()
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const unwrappedParams = React.use(params as any) as { id: string };
   const { id } = unwrappedParams;
   const [order, setOrder] = useState<Order | null>(null);
